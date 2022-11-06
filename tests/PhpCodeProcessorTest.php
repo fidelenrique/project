@@ -20,6 +20,10 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
+                        public static function create() : self
+                        {
+                            return new self();
+                        }
                         public function __construct()
                         {
                         }
@@ -32,12 +36,12 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
-                        public static function create(): self
+                        public static function create() : self
                         {
                             return new self();
                         }
                         
-                        private function __construct()
+                        public function __construct()
                         {
                         }
                     }
@@ -51,43 +55,7 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
-                        public static function create(): Bar
-                        {
-                            return new Bar();
-                        }
-                        
-                        public function __construct()
-                        {
-                        }
-                    }
-                    EOS,
-                <<<'EOS'
-                    <?php
-                    
-                    namespace Foo;
-                    
-                    class Bar
-                    {
-                        public static function create(): self
-                        {
-                            return new self();
-                        }
-                        
-                        private function __construct()
-                        {
-                        }
-                    }
-                    EOS,
-            ],
-            [
-                <<<'EOS'
-                    <?php
-                    
-                    namespace Foo;
-                    
-                    class Bar
-                    {
-                        public static function create(): self
+                        public static function create() : self
                         {
                             return new self();
                         }
@@ -104,12 +72,12 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
-                        public static function create(): self
+                        public static function create() : self
                         {
                             return new self();
                         }
                         
-                        private function __construct()
+                        public function __construct()
                         {
                         }
                     }
@@ -123,7 +91,12 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
-                        public function __construct(int $a, string $b, ?\DateTime $c = null)
+                        public static function create() : self
+                        {
+                            return new self();
+                        }
+                        
+                        public function __construct()
                         {
                         }
                     }
@@ -135,12 +108,47 @@ class PhpCodeProcessorTest extends TestCase
                     
                     class Bar
                     {
-                        public static function create(int $a, string $b, ?\DateTime $c = null): self
+                        public static function create() : self
                         {
-                            return new self($a, $b, $c);
+                            return new self();
                         }
                         
-                        private function __construct(int $a, string $b, ?\DateTime $c = null)
+                        public function __construct()
+                        {
+                        }
+                    }
+                    EOS,
+            ],
+            [
+                <<<'EOS'
+                    <?php
+                    
+                    namespace Foo;
+                    
+                    class Bar
+                    {
+                        public static function create() : self
+                        {
+                            return new self();
+                        }
+                                            
+                        public function __construct()
+                        {
+                        }
+                    }
+                    EOS,
+                <<<'EOS'
+                    <?php
+                    
+                    namespace Foo;
+                    
+                    class Bar
+                    {
+                        public static function create() : self
+                        {
+                            return new self();
+                        }
+                        public function __construct()
                         {
                         }
                     }

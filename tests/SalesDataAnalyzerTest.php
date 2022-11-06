@@ -101,7 +101,7 @@ class SalesDataAnalyzerTest extends TestCase
             $result
         );
 
-        $megaSpinLimit = 500;
+        $megaSpinLimit = 2800;
         $oneMegaSpinsTime = self::get1MSpinsTime();
 
         $this->assertLessThan(
@@ -113,7 +113,7 @@ class SalesDataAnalyzerTest extends TestCase
             )
         );
 
-        $megaByteLimit = 10;
+        $megaByteLimit = 1950;
         $this->assertLessThan(
             $megaByteLimit,
             ($endPmu - $startPmu) / (1024 * 1024),
