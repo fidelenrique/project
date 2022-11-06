@@ -13,18 +13,15 @@ class SalesDataAnalyzer
             return [];
         }
 
-        $getData = self::getDataFile($fileData);
+        $getData = self::create($fileData);
         $listStore = $getData['store'];
         $listProduct = $getData['product'];
-
         $storesByParams = $getData['stores_params'];
         $productsByParams = $getData['products_params'];
-
-        $storesAndParams = self::getListStoreAndProduct($listStore, $storesByParams);
+        $storesAndParams = self::getListStoreOrProduct($listStore, $storesByParams);
         $storesAndRevenues = $storesAndParams['prices'];
         $storesAndOrders = $storesAndParams['orders'];
-
-        $productsAndParams = self::getListStoreAndProduct($listProduct, $productsByParams);
+        $productsAndParams = self::getListStoreOrProduct($listProduct, $productsByParams);
         $productsAndRevenues = $productsAndParams['prices'];
         $productsAndOrders = $productsAndParams['orders'];
 
@@ -51,7 +48,13 @@ class SalesDataAnalyzer
         return array_merge($storesByRevenus, $storesByOrders, $storesByAverages, $productsByRevenus, $productsByOrders);
     }
 
-    private static function getListStoreAndProduct($list, $listByParams): array
+    /**
+     * This method calculates the sales volume and the number of orders
+     * @param $list
+     * @param $listByParams
+     * @return array[]
+     */
+    private static function getListStoreOrProduct($list, $listByParams): array
     {
         ini_set("memory_limit", "-1");
         $prices = [];
@@ -76,7 +79,12 @@ class SalesDataAnalyzer
         return ['prices' => $prices, 'orders' => $orders];
     }
 
-    private static function getDataFile($fileData): array
+    /**
+     * This method defines store and product listings and their scan parameters
+     * @param $fileData
+     * @return array
+     */
+    private static function create($fileData): array
     {
         ini_set("memory_limit", "-1");
         $keysValues = [];
@@ -125,6 +133,14 @@ class SalesDataAnalyzer
         ];
     }
 
+    /**
+     * This method defines the first 3 stores or the first 3 products according to their turnover and number of orders
+     * @param $sortableContext
+     * @param $sortParameterLabel
+     * @param $identifier
+     * @param $option
+     * @return array
+     */
     private static function getTop3($sortableContext, $sortParameterLabel, $identifier, $option): array
     {
         ini_set("memory_limit", "-1");
